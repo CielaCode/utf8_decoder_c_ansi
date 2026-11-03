@@ -1,0 +1,30 @@
+digraph Analyseur_ASCII_UTF8 {
+	rankdir=TB size=8
+	Start [label="Début" shape=ellipse]
+	ArgCheck [label="Nb d'arguments < 2 ?" shape=diamond]
+	Usage [label="Afficher \"Usage : ./programme chaîne\"
+Quitter avec échec" shape=box]
+	Init [label="chaine ← argument[1]
+i ← 0" shape=box]
+	While [label="chaine[i] ≠ '\0' ?" shape=diamond]
+	ReadByte [label="octet ← chaine[i]" shape=box]
+	Display [label="Afficher position, octet (hex, déc)" shape=box]
+	CheckAscii [label="octet ≤ 127 ?" shape=diamond]
+	Ascii [label="Afficher \"ASCII simple\"" shape=box]
+	NonAscii [label="Afficher \"Non-ASCII\"" shape=box]
+	Inc [label="i ← i + 1" shape=box]
+	End [label="Quitter avec succès" shape=ellipse]
+	Start -> ArgCheck
+	ArgCheck -> Usage [label=Oui]
+	ArgCheck -> Init [label=Non]
+	Init -> While
+	While -> ReadByte [label=Oui]
+	While -> End [label=Non]
+	ReadByte -> Display
+	Display -> CheckAscii
+	CheckAscii -> Ascii [label=Oui]
+	CheckAscii -> NonAscii [label=Non]
+	Ascii -> Inc
+	NonAscii -> Inc
+	Inc -> While
+}
